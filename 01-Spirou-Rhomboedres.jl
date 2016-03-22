@@ -50,7 +50,7 @@ end
 #Liste de tous les fichiers CSV du répertoire
 listeDesFichiersMesuresRhomboedres = getListeFichiersDeType(repertoireMesuresRhomboedres, ".csv")
 
-
+# incFichiers=1
 #incFichiers = 2
 ##Pour tous les fichiers CSV
 for incFichiers in 1:length(listeDesFichiersMesuresRhomboedres)
@@ -79,6 +79,8 @@ for incFichiers in 1:length(listeDesFichiersMesuresRhomboedres)
   PmIncert = dfManipRhomboedres[:PmIncert]
   Temps = dfManipRhomboedres[:Temps]
   ErreurP1 = dfManipRhomboedres[:ErreurP1]
+  PosDensite = dfManipRhomboedres[:PosDensite]
+  NumDensite = dfManipRhomboedres[:NumDensite]
 
   maxErreurP1 = maximum(ErreurP1)
   moyPmMoy = mean(PmMoy)
@@ -116,11 +118,12 @@ for incFichiers in 1:length(listeDesFichiersMesuresRhomboedres)
   #Fabrique le fichier comparaison des bruits qui sera utilisé pour le script graphique de R
   dfMesuresRhomboedresCorriges = DataFrame(Lambda = Float64[], Tour = Int64[], P1 = Float64[],
                                            Cell1Corrige = Float64[], IncertCell1Corrige = Float64[],
-                                           Cell2Corrige = Float64[], IncertCell2Corrige = Float64[])
+                                           Cell2Corrige = Float64[], IncertCell2Corrige = Float64[],
+                                           NumDensite = Int64[])
   dfMesuresRhomboedresCorriges
 
   for incNbLignes in 1:length(Lambda)
-    push!(dfMesuresRhomboedresCorriges, [Lambda[incNbLignes] Tour[incNbLignes] P1[incNbLignes] Cell1Corrige[incNbLignes] IncertCell1Corrige[incNbLignes] Cell2Corrige[incNbLignes] IncertCell2Corrige[incNbLignes]])
+    push!(dfMesuresRhomboedresCorriges, [Lambda[incNbLignes] Tour[incNbLignes] P1[incNbLignes] Cell1Corrige[incNbLignes] IncertCell1Corrige[incNbLignes] Cell2Corrige[incNbLignes] IncertCell2Corrige[incNbLignes] NumDensite[incNbLignes]])
   end
 
   writetable(nomDuFichierMesuresRhomboedresCorrigees, dfMesuresRhomboedresCorriges, quotemark = '\"', separator = ';', header = true)
